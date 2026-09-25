@@ -95,6 +95,11 @@ public class DnsLookupService {
                         String value = fullValue.toString();
 
                         if (value.contains("v=DKIM1") || value.contains("k=rsa")) {
+
+                            if (value.contains("p=;") || value.trim().endsWith("p=")) {
+                                return "DKIM key REVOKED using selector '" + selector + "' — record exists but key is empty (inactive)";
+                            }
+
                             return "DKIM found using selector '" + selector + "': " + value;
                         }
                     }
