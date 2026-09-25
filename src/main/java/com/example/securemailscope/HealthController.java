@@ -22,4 +22,14 @@ public class HealthController {
     public String checkSpf(@RequestParam String domain) {
         return dnsLookupService.getSpfRecord(domain);
     }
+
+    @GetMapping("/dmarc")
+    public String checkDmarc(@RequestParam String domain) {
+        return dnsLookupService.getDmarcRecord(domain);
+    }
+
+    @GetMapping("/dkim")
+    public String checkDkim(@RequestParam String domain) {
+        return dnsLookupService.getDkimRecord(domain);
+    }
 }
