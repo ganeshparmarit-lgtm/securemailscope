@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class HealthController {
 
     private final DnsLookupService dnsLookupService;
+    private final ScoringService scoringService;
 
-    public HealthController(DnsLookupService dnsLookupService) {
+    public HealthController(DnsLookupService dnsLookupService, ScoringService scoringService) {
         this.dnsLookupService = dnsLookupService;
+        this.scoringService = scoringService;
     }
 
     @GetMapping("/health")
@@ -31,5 +33,10 @@ public class HealthController {
     @GetMapping("/dkim")
     public String checkDkim(@RequestParam String domain) {
         return dnsLookupService.getDkimRecord(domain);
+    }
+
+    @GetMapping("/score")
+    public int checkScore(@RequestParam String domain){
+        return scoringService.CalculateScore(domain);
     }
 }

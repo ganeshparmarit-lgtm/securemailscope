@@ -96,6 +96,7 @@ public class DnsLookupService {
 
                         if (value.contains("v=DKIM1") || value.contains("k=rsa")) {
 
+                            //"Detect revoked DKIM keys (empty public key) instead of falsely reporting as found"
                             if (value.contains("p=;") || value.trim().endsWith("p=")) {
                                 return "DKIM key REVOKED using selector '" + selector + "' — record exists but key is empty (inactive)";
                             }
@@ -106,7 +107,7 @@ public class DnsLookupService {
                 }
 
             } catch (Exception e) {
-                // is selector ke saath nahi mila, agla try karo
+
             }
         }
 
